@@ -1,45 +1,46 @@
+from ctypes import pointer
 from typing import List, Tuple
 
 from functions.utility import euclidean_distance, min3
 
-def is_in_strip(p1: List[float], p2: List[float], d: float) -> bool:
-  for i in range(len(p1)):
-    if abs(p1[i] - p2[i] > d):
+def is_in_strip(point_1: List[float], point_2: List[float], width: float) -> bool:
+  for i in range(len(point_1)):
+    if abs(point_1[i] - point_2[i] > width):
       return False
   return True
 
-def closest_pair_strip(left: List[List[float]], right: List[List[float]], d: float, p1: List[float], p2: List[float]) -> float:
-  min_d = d
-  min_p1 = p1
-  min_p2 = p2
-  for p1 in left:
-    for p2 in right:
-      if is_in_strip(p1, p2, d):
-        temp_d = euclidean_distance(p1, p2)
-        if temp_d < min_d:
-          min_d = temp_d
-          min_p1 = p1
-          min_p2 = p2
-  return min_d, min_p1, min_p2
+def closest_pair_strip(left: List[List[float]], right: List[List[float]], width: float, _point_1: List[float], _point_2: List[float]) -> Tuple[float, List[float], List[float]]:
+  min_distance, point_1, point_2 = width, _point_1, _point_2
+
+  for point_left in left:
+    for point_right in right:
+      if is_in_strip(point_left, point_right, width):
+        temp_distance = euclidean_distance(point_left, point_right)
+        if temp_distance < min_distance:
+          min_distance, point_1, point_2 = temp_distance, point_left, point_right
+
+  return min_distance, point_1, point_2
 
 def closest_pair(points: List[List[float]]) -> Tuple[float, List[float], List[float]]:
   if len(points) == 2:
     return euclidean_distance(points[0], points[1]), points[0], points[1]
   elif len(points) == 3:
-    min_d, i1, i2 = min3(euclidean_distance(points[0], points[1]), 
+    min_distance, index_1, index_2 = min3(euclidean_distance(points[0], points[1]), 
                       euclidean_distance(points[0], points[2]), 
                       euclidean_distance(points[1], points[2]))
-    return(min_d, points[i1], points[i2])
+    return(min_distance, points[index_1], points[index_2])
   else:
     mid = len(points)//2
     left = points[:mid]
     right = points[mid:]
 
-    d1, l1, l2 = closest_pair(left)
-    d2, r1, r2 = closest_pair(right)
-    min_d, min_p1, min_p2 = (d1, l1, l2) if d1 <= d2 else (d2, r1, r2)
+    min_left, point_left_1, point_left_2 = closest_pair(left)
+    min_right, point_right_1, point_right_2 = closest_pair(right)
 
-    d3, s1, s2 = closest_pair_strip(left, right, min_d, min_p1, min_p2)
-    min_d, min_p1, min_p2 = (d3, s1, s2) if d3 <= min_d else (min_d, min_p1, min_p2)
+    min_distance, point_1, point_2 = (min_left, point_left_1, point_left_2) if min_left <= min_right else (min_right, point_right_1, point_right_2)
 
-    return min_d, min_p1, min_p2    
+    min_strip, point_strip_1, point_strip_2 = closest_pair_strip(left, right, min_distance, point_1, point_2)
+
+    min_distance, point_1, point_2 = (min_strip, point_strip_1, point_strip_2) if min_strip <= min_distance else (min_distance, point_1, point_2)
+
+    return min_distance, point_1, point_2
