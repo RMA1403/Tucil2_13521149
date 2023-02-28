@@ -1,3 +1,5 @@
+from time import time
+
 from functions.closest_pair import closest_pair
 from functions.sorting import quicksort_on_x
 from functions.utility import get_random_points
@@ -11,11 +13,18 @@ def main() -> None:
   points = get_random_points(num_points, dimension)
 
   sorted_points = quicksort_on_x(points)
-  min_distance_dnc, point_1_dnc, point_2_dnc = closest_pair(sorted_points)
+  
+  start_time_dnc = time()
+  min_distance_dnc, point_1_dnc, point_2_dnc, count_euc_dnc = closest_pair(sorted_points)
+  end_time_dnc = time()
 
-  min_distance_bf, point_1_bf, point_2_bf = brute_force(points)
+  start_time_bf = time()
+  min_distance_bf, point_1_bf, point_2_bf, count_euc_bf = brute_force(points)
+  end_time_bf = time()
 
-  print_output(min_distance_dnc, point_1_dnc, point_2_dnc, 1, min_distance_bf, point_1_bf, point_2_bf, 1, 1.0)
+  exec_time_dnc = end_time_dnc - start_time_dnc
+  exec_time_bf = end_time_bf - start_time_bf
+  print_output(min_distance_dnc, point_1_dnc, point_2_dnc, count_euc_dnc, exec_time_dnc, min_distance_bf, point_1_bf, point_2_bf, count_euc_bf, exec_time_bf)
 
   # visualize(p, p1, p2)
 
