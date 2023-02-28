@@ -1,20 +1,24 @@
 import matplotlib.pyplot as plt
-from mpl_toolkits.mplot3d import Axes3D
 
-def visualize(points, p1, p2):
-  x = points
+def visualize(_points, point_1, point_2):
+  points = _points[:]
   fig = plt.figure()
-  ax = fig.add_subplot(111, projection='3d')
-  for i in range(len(x)):
-    ax.scatter(x[i][0], x[i][1], x[i][2], c='b', marker='o')
-  ax.scatter(p1[0], p1[1], p1[2], c='r', marker='o')
-  ax.scatter(p2[0], p2[1], p2[2], c='r', marker='o')
-  ax.set_xlim([-500, 500])
-  ax.set_ylim([-500, 500])
-  ax.set_zlim([-500, 500])
-  ax.set_xlabel('X')
-  ax.set_ylabel('Y')
-  ax.set_zlabel('z')
+
+  axis = fig.add_subplot(111, projection='3d')
+  for i in range(len(points)):
+    axis.scatter(points[i][0], points[i][1], points[i][2], c='b', marker='o')
+
+  axis.scatter(point_1[0], point_1[1], point_1[2], c='r', marker='o')
+  axis.scatter(point_2[0], point_2[1], point_2[2], c='r', marker='o')
+
+  axis.set_xlim([-500, 500])
+  axis.set_ylim([-500, 500])
+  axis.set_zlim([-500, 500])
+
+  axis.set_xlabel('X')
+  axis.set_ylabel('Y')
+  axis.set_zlabel('z')
+
   plt.show()
 
   

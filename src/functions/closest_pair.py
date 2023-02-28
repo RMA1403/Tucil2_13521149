@@ -29,8 +29,8 @@ def closest_pair(points: List[List[float]]) -> Tuple[float, List[float], List[fl
     return euclidean_distance(points[0], points[1]), points[0], points[1], 1
   elif len(points) == 3:
     min_distance, index_1, index_2 = min3(euclidean_distance(points[0], points[1]), 
-                      euclidean_distance(points[0], points[2]), 
-                      euclidean_distance(points[1], points[2]))
+                                          euclidean_distance(points[0], points[2]), 
+                                          euclidean_distance(points[1], points[2]))
     return min_distance, points[index_1], points[index_2], 3
   else:
     mid = len(points)//2
@@ -47,4 +47,4 @@ def closest_pair(points: List[List[float]]) -> Tuple[float, List[float], List[fl
     min_distance, point_1, point_2 = (min_strip, point_strip_1, point_strip_2) if min_strip <= min_distance else (min_distance, point_1, point_2)
 
     count_euc = count_left + count_right + count_strip
-    return min_distance, point_1, point_2, count_strip
+    return min_distance, point_1, point_2, count_euc

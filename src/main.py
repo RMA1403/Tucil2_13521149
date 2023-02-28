@@ -13,7 +13,7 @@ def main() -> None:
   points = get_random_points(num_points, dimension)
 
   sorted_points = quicksort_on_x(points)
-  
+
   start_time_dnc = time()
   min_distance_dnc, point_1_dnc, point_2_dnc, count_euc_dnc = closest_pair(sorted_points)
   end_time_dnc = time()
@@ -26,7 +26,8 @@ def main() -> None:
   exec_time_bf = end_time_bf - start_time_bf
   print_output(min_distance_dnc, point_1_dnc, point_2_dnc, count_euc_dnc, exec_time_dnc, min_distance_bf, point_1_bf, point_2_bf, count_euc_bf, exec_time_bf)
 
-  # visualize(p, p1, p2)
+  if dimension == 3:
+    visualize(points, point_1_dnc, point_2_dnc)
 
 if __name__ == "__main__":
   main()
