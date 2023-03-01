@@ -1,6 +1,17 @@
 import matplotlib.pyplot as plt
 
 def visualize(_points, point_1, point_2):
+  """Visualize closest-pair of point in three dimension
+  
+  Parameters
+  ----------
+  _points : List of points
+  point_1 : First point forming the closest-pair
+  point_2 : Second point forming the closest-pari
+
+  Returns
+  -------
+  """
   points = _points[:]
   fig = plt.figure()
 
